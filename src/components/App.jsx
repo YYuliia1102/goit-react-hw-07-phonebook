@@ -9,19 +9,17 @@ import css from './App.module.css';
 
 const App = () => {
   return (
-    <div className={css.container}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <div>
-            <h1>Phonebook</h1>
-            <ContactForm />
-            <h2>Contacts</h2>
-            <Filter />
-            <ContactList />
-          </div>
-        </PersistGate>
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <div className={css.container}>
+          <h1>Phonebook</h1>
+          <ContactForm />
+          <h2>Contacts</h2>
+          <Filter />
+          <ContactList />
+        </div>
+      </PersistGate>
+    </Provider>
   );
 };
 

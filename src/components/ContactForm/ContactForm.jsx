@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { addContact } from "../../store/contactSlice";
-import { selectContacts } from "../../store/contactSlice";
+
 
 const ContactForm = () => {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
     const dispatch = useDispatch();
-    const contacts = useSelector(selectContacts);
+    const contacts = useSelector((state) => state.contacts.items);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,7 +17,7 @@ const ContactForm = () => {
             return;
         }
 
-        const isExistingContact = contacts.some(
+        const isExistingContact = contacts.items.some(
             (contact) => contact.name.toLowerCase() === name.toLowerCase()
         );
 
@@ -36,7 +36,7 @@ const ContactForm = () => {
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">
-                    Ім'я:
+                    Name:
                 </label>
                 <input
                     type="text"
@@ -52,7 +52,7 @@ const ContactForm = () => {
 
             <div className="mb-3">
                 <label htmlFor="number" className="form-label">
-                    Номер:
+                    Number:
                 </label>
                 <input
                     type="tel"

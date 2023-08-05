@@ -12,10 +12,11 @@ import {
 } from 'redux-persist';
 import contactReducer from "./contactSlice";
 
+
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["contacts"], // Зберігати тільки ключ `contacts` у локальному сховищі
+    whitelist: ["contacts"],
 };
 
 const persistedReducer = persistReducer(persistConfig, contactReducer);
