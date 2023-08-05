@@ -42,7 +42,7 @@ export const selectVisibleContacts = createSelector(
     [selectContacts, selectFilter],
     (contacts, filter) => {
         if (!filter) {
-            return contacts; // Повертаємо всі контакти, якщо фільтр порожній
+            return contacts;
         }
 
         return contacts.filter((contact) =>
@@ -57,6 +57,7 @@ const contactSlice = createSlice({
     initialState,
     reducers: {
         setFilter: (state, action) => {
+            console.log(action.payload);
             state.filter = action.payload;
         },
     },
@@ -67,6 +68,7 @@ const contactSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchContacts.fulfilled, (state, action) => {
+                console.log(action.payload);
                 state.items = action.payload;
                 state.isLoading = false;
             })

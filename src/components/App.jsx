@@ -15,6 +15,7 @@ const App = () => {
           <h1>Phonebook</h1>
           <ContactForm />
           <h2>Contacts</h2>
+          <h5>Find contacts by name</h5>
           <Filter />
           <ContactList />
         </div>
