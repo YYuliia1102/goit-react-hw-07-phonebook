@@ -1,13 +1,10 @@
 import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 const initialState = {
-    contacts: {
-        items: [],
-        isLoading: false,
-        error: null,
-    },
+    items: [],
+    isLoading: false,
+    error: null,
     filter: "",
 };
 
@@ -44,8 +41,8 @@ export const selectFilter = (state) => state.contacts.filter;
 export const selectVisibleContacts = createSelector(
     [selectContacts, selectFilter],
     (contacts, filter) => {
-        if (!contacts || !filter) {
-            return [];
+        if (!filter) {
+            return contacts; // Повертаємо всі контакти, якщо фільтр порожній
         }
 
         return contacts.filter((contact) =>
@@ -66,22 +63,22 @@ const contactSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchContacts.pending, (state) => {
-                state.contacts.isLoading = true;
-                state.contacts.error = null;
+                state.isLoading = true;
+                state.error = null;
             })
             .addCase(fetchContacts.fulfilled, (state, action) => {
-                state.contacts.items = action.payload;
-                state.contacts.isLoading = false;
+                state.items = action.payload;
+                state.isLoading = false;
             })
             .addCase(fetchContacts.rejected, (state, action) => {
-                state.contacts.isLoading = false;
-                state.contacts.error = action.error.message;
+                state.isLoading = false;
+                state.error = action.error.message;
             })
             .addCase(addContact.fulfilled, (state, action) => {
-                state.contacts.items = [...state.contacts.items, action.payload];
+                state.items.push(action.payload);
             })
             .addCase(deleteContact.fulfilled, (state, action) => {
-                state.contacts.items = state.contacts.items.filter((contact) => contact.id !== action.payload);
+                state.items = state.items.filter((contact) => contact.id !== action.payload);
             });
 
     },

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
-import { addContact } from "../../store/contactSlice";
-
+import { addContact, selectVisibleContacts } from "../../store/contactSlice";
 
 const ContactForm = () => {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
     const dispatch = useDispatch();
-    const contacts = useSelector((state) => state.contacts.items);
+    const filteredContacts = useSelector(selectVisibleContacts);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,7 +16,7 @@ const ContactForm = () => {
             return;
         }
 
-        const isExistingContact = contacts.items.some(
+        const isExistingContact = filteredContacts.some(
             (contact) => contact.name.toLowerCase() === name.toLowerCase()
         );
 
