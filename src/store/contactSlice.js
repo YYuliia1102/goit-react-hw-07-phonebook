@@ -38,26 +38,20 @@ export const deleteContact = createAsyncThunk("contacts/deleteContact", async (i
 export const selectContacts = (state) => state.contacts.items;
 export const selectFilter = (state) => state.contacts.filter;
 
-export const selectVisibleContacts = createSelector(
-    [selectContacts, selectFilter],
-    (contacts, filter) => {
-        if (!filter) {
-            return contacts;
-        }
-
-        return contacts.filter((contact) =>
-            contact.name.toLowerCase().includes(filter.toLowerCase())
+export const selectFilteredContacts = createSelector(
+    [selectFilter, selectContacts],
+    (filterValue, contacts) => {
+        return contacts.filter(contact =>
+            contact.name.toLowerCase().includes(filterValue.toLowerCase())
         );
     }
 );
-
 
 const contactSlice = createSlice({
     name: "contacts",
     initialState,
     reducers: {
         setFilter: (state, action) => {
-            console.log(action.payload);
             state.filter = action.payload;
         },
     },
@@ -68,7 +62,6 @@ const contactSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchContacts.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.items = action.payload;
                 state.isLoading = false;
             })
@@ -82,7 +75,6 @@ const contactSlice = createSlice({
             .addCase(deleteContact.fulfilled, (state, action) => {
                 state.items = state.items.filter((contact) => contact.id !== action.payload);
             });
-
     },
 });
 

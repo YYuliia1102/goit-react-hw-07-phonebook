@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ContactItem from "../ContactItem/ContactItem";
-import { fetchContacts, deleteContact, selectContacts } from "../../store/contactSlice";
+import { fetchContacts, deleteContact, selectFilteredContacts } from "../../store/contactSlice";
 
 const ContactList = () => {
     const dispatch = useDispatch();
-    const filteredContacts = useSelector(selectContacts);
+    const filteredContacts = useSelector(selectFilteredContacts);
 
     useEffect(() => {
         dispatch(fetchContacts());

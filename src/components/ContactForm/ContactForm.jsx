@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
-import { addContact, selectContacts } from "../../store/contactSlice";
+import { addContact, selectFilteredContacts } from "../../store/contactSlice";
 
 const ContactForm = () => {
     const [name, setName] = useState("");
     const [number, setNumber] = useState("");
     const dispatch = useDispatch();
-    const allContacts = useSelector(selectContacts);
+    const filteredContacts = useSelector(selectFilteredContacts);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (name.trim() === "" || number.trim() === "") {
-            alert("Будь ласка, заповніть всі поля форми.");
+            alert("Please fill in all form fields.");
             return;
         }
 
-        const isExistingContact = allContacts.some(
+        const isExistingContact = filteredContacts.some(
             (contact) => contact.name.toLowerCase() === name.toLowerCase()
         );
 
         if (isExistingContact) {
-            alert("Такий контакт вже існує.");
+            alert("This contact already exists.");
             return;
         }
 
@@ -42,7 +42,7 @@ const ContactForm = () => {
                     id="name"
                     className="form-control"
                     name="name"
-                    placeholder="Yuliia Yehorova"
+                    placeholder="John Doe"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -58,7 +58,7 @@ const ContactForm = () => {
                     id="number"
                     className="form-control"
                     name="number"
-                    placeholder="+380(97)-000-00-00"
+                    placeholder="+1-123-456-7890"
                     value={number}
                     onChange={(e) => setNumber(e.target.value)}
                     required
@@ -66,7 +66,7 @@ const ContactForm = () => {
             </div>
 
             <button type="submit" className="btn btn-primary">
-                Додати контакт
+                Add Contact
             </button>
         </form>
     );
